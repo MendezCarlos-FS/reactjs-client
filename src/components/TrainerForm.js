@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { createTrainer } from "../services/userService";
 
 
 function TrainerForm(props) {
     const [trainer, setTrainer] = useState({});
-    function saveUser($event) {
+    function saveTrainer($event) {
         $event.preventDefault();
-        createTrainer(trainer);
+        props.saveTrainer(trainer);
     }
 
     /**
@@ -21,7 +20,7 @@ function TrainerForm(props) {
     }
 
     return (
-        <form style={styles.container} onSubmit={$event => saveUser($event)}>
+        <form style={styles.container} onSubmit={$event => saveTrainer($event)}>
             <input type="text" placeholder="Name"
                 onChange={$event => setTrainer({...trainer, name: $event.target.value})} required/>
             <input type="number" placeholder="Age" min={0}

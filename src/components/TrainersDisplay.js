@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
-import { getTrainers } from "../services/userService";
-
-
 function TrainersDisplay(props) {
-    const [trainers, setTrainers] = useState([]);
-
     function mapTrainers() {
-        return trainers.map((trainer, index) => {
+        return props.trainers.map((trainer, index) => {
             return (
                 <article key={index} style={styles.trainer}>
-                    <h2>{trainer.name}</h2>
+                    <div style={styles.trainerHeader}>
+                        <h2 style={styles.trainerName}>{trainer.name}</h2>
+                        <button type="button" onClick={() => props.dltTrainer(trainer.name)}>X</button>
+                    </div>
                     <h3>Age: {trainer.age}</h3>
                     <h3>Owned Pokemon:</h3>
                     {!trainer.ownedPokemon.length
@@ -48,12 +45,6 @@ function TrainersDisplay(props) {
         );
     }
 
-    useEffect(() => {
-        getTrainers().then(trainers => {
-            setTrainers(trainers);
-        });
-    });
-
     return (
         <section style={styles.container}>
             {mapTrainers()}
@@ -73,6 +64,14 @@ const styles = {
         border: "1px solid black",
         borderRadius: "5px",
         padding: "10px",
+    },
+    trainerName: {
+        textAlign: "center",
+    },
+    trainerHeader: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
     },
     noPokemon: {
         textAlign: "center",
